@@ -108,19 +108,18 @@ Nejsme tu proto, abychom přihlíželi – jsme tu proto, abychom pracovali a ob
       <div class="leader glass">
         <div class="leader-photo">
   <picture>
-    <!-- primárně WebP -->
-    <source type="image/webp"
-            srcset="images/leader-260.webp 260w, images/leader-520.webp 520w"
-            sizes="(max-width: 900px) 50vw, 260px">
-    <!-- fallback JPEG -->
+    <source
+      type="image/webp"
+      srcset="images/leader-260.webp 1x, images/leader-520.webp 2x"
+      sizes="260px">
     <img
       src="images/leader-260.jpg"
-      srcset="images/leader-260.jpg 260w, images/leader-520.jpg 520w"
-      sizes="(max-width: 900px) 50vw, 260px"
+      srcset="images/leader-260.jpg 1x, images/leader-520.jpg 2x"
+      sizes="260px"
       alt="Party Leader"
-      loading="lazy"
       decoding="async"
-      width="260" height="273" />
+      width="260" height="273"
+      style="display:block; width:100%; height:auto; aspect-ratio:1/1.05; object-fit:cover;">
   </picture>
 </div>
         <div class="leader-info">
