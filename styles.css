@@ -36,6 +36,11 @@ section { scroll-margin-top: 72px; }
 }
 .header-inner { display: flex; align-items: center; justify-content: space-between; min-height: 56px; position: relative; }
 .logo { font-size: 1.35rem; font-weight: 700; letter-spacing: .4px; }
+.header .logo{
+  color:#fff;
+  text-decoration:none;
+}
+.header .logo:hover{ opacity:.9; }
 
 /* Nav */
 nav .nav-list { list-style: none; display: flex; gap: 1.1rem; }
