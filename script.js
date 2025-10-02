@@ -1,4 +1,5 @@
 // Fade-in on scroll
+document.documentElement.classList.add('js');
 const fadeEls = document.querySelectorAll('.fade-in');
 const io = new IntersectionObserver(entries => {
   entries.forEach(entry => {

@@ -222,8 +222,15 @@ nav a.active, nav a:hover { background: rgba(255,255,255,.14); }
 footer{ background: linear-gradient(90deg, var(--blue-900), var(--blue)); color:#fff; text-align:center; padding:1rem; margin-top:2rem; }
 
 /* Fade-in */
-.fade-in{ opacity:0; transform: translateY(20px); transition: opacity .6s ease, transform .6s ease; }
-.fade-in.show{ opacity:1; transform: translateY(0); }
+.js .fade-in{
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity .6s ease, transform .6s ease;
+}
+.js .fade-in.show{
+  opacity: 1;
+  transform: translateY(0);
+}
 
 /* ---------- Mobile styles ---------- */
 @media (max-width: 900px){
