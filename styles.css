@@ -252,3 +252,46 @@ footer{ background: linear-gradient(90deg, var(--blue-900), var(--blue)); color:
   .btn { width: 100%; max-width: 320px; }
     .hero-logo{ width: 120px; }
 }
+
+.reports-stack{
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+.report-card{
+  padding: 1.1rem 1.2rem;
+}
+.report-head{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: .5rem .8rem;
+  margin-bottom: .5rem;
+}
+.report-title{
+  margin: 0;
+  font-size: clamp(1.15rem, 2.8vw, 1.35rem);
+  color: var(--blue-900);
+}
+.report-meta{
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  color: #5b6a7a;
+  font-weight: 600;
+  font-size: .92rem;
+}
+.badge{
+  display: inline-block;
+  padding: .22rem .55rem;
+  border-radius: 999px;
+  background: rgba(10,86,194,.12);
+  color: var(--blue-900);
+  border: 1px solid rgba(10,86,194,.18);
+}
+.report-body p{ margin: .35rem 0 .8rem; line-height: 1.6; }
+
+@media (max-width: 900px){
+  .report-meta{ font-size: .9rem; }
+}
