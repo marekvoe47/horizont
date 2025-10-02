@@ -122,13 +122,39 @@ nav a.active, nav a:hover { background: rgba(255,255,255,.14); }
 
 /* Program */
 .program-grid{ display:grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; }
-.program-item{ padding: 1.1rem 1.1rem .9rem; cursor:pointer; outline:none;
-  transition: box-shadow .25s ease, transform .2s ease, border-color .25s ease; }
-.program-item:hover, .program-item:focus{ transform: translateY(-2px); box-shadow:0 16px 32px rgba(10,86,194,.18); border-color: var(--ring); }
-.program-item h3{ margin:.15rem 0 .35rem; font-size:1.05rem; }
-.program-content{ overflow:hidden; max-height:0; opacity:0; transition:max-height .35s ease, opacity .3s ease; }
-.program-item.open .program-content{ max-height: 300px; opacity: 1; margin-top: .5rem; }
-.program-item:focus{ outline:none; }
+.program-item{
+  padding: 1.1rem 1.1rem 0.9rem;
+  cursor: default;                 /* už to není tlačítko */
+  overflow: visible;               /* nic neuřezávat */
+}
+.program-content{
+  max-height: none !important;     /* zruší dřívější omezení */
+  opacity: 1 !important;
+}
+.program-item:hover, .program-item:focus{
+  transform: none;                 /* žádné „poskakování“ */
+  box-shadow: 0 12px 24px rgba(10,86,194,.10);
+  border-color: rgba(10,86,194,.15);
+}
+
+/* Patička s ikonou */
+.program-foot{
+  margin-top: .85rem;
+  padding-top: .65rem;
+  border-top: 1px dashed rgba(10,86,194,.18);
+  display: flex;
+  justify-content: flex-end;       /* ikona vpravo; změň na center dle chuti */
+  align-items: center;
+}
+.program-icon{
+  width: 40px;                     /* malý symbol */
+  height: 40px;
+  object-fit: contain;
+  opacity: .9;
+}
+@media (max-width: 900px){
+  .program-icon{ width: 36px; height: 36px; }
+}
 
 /* Leader */
 .leader{ display:flex; flex-wrap:wrap; align-items:center; gap:1.4rem; padding:1rem; }
@@ -153,6 +179,39 @@ nav a.active, nav a:hover { background: rgba(255,255,255,.14); }
 .label{ color:#4a5568; font-weight:600; }
 .contact a{ color: var(--blue-900); font-weight:700; text-decoration:none; }
 .contact a:hover{ text-decoration:underline; }
+
+.contact-info-box{
+  background: linear-gradient(135deg, #0b4fb6, #1a80ff);
+  color: #fff;
+  padding: 1.1rem 1.2rem;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,.25);
+  box-shadow: 0 16px 36px rgba(20, 80, 170, .25);
+  max-width: 900px;         /* drží rozumnou šířku */
+  margin: 0.8rem auto 1.2rem;
+}
+.contact-info-box p{
+  margin: 0 0 .7rem;
+  line-height: 1.55;
+}
+.contact-info-box p:last-child{ margin-bottom: 0; }
+
+/* odkazy uvnitř boxu budou bílé a čitelné */
+.contact-info-box a{
+  color:#fff; text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.contact-info-box strong{ font-weight: 700; }
+
+/* mobil – víc vzduchu, menší stín */
+@media (max-width: 900px){
+  .contact-info-box{
+    padding: 1rem 1rem;
+    border-radius: 14px;
+    box-shadow: 0 10px 24px rgba(20,80,170,.22);
+    margin: .6rem auto 1rem;
+  }
+}
 
 /* Footer */
 footer{ background: linear-gradient(90deg, var(--blue-900), var(--blue)); color:#fff; text-align:center; padding:1rem; margin-top:2rem; }
