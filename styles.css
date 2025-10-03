@@ -302,3 +302,34 @@ footer{ background: linear-gradient(90deg, var(--blue-900), var(--blue)); color:
 @media (max-width: 900px){
   .report-meta{ font-size: .9rem; }
 }
+
+.quote-context{
+  position: relative;
+  z-index: 1;                       
+  margin-top: .65rem;
+  padding: .55rem .7rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,.30);
+  background: rgba(255,255,255,.12);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.15);
+  color: #eaf2ff;
+  font-size: .86rem;                
+  line-height: 1.45;
+}
+
+.quote-context .ctx-label{
+  display:inline-block;
+  font-weight: 800;
+  letter-spacing:.2px;
+  padding:.14rem .46rem;
+  border-radius: 999px;
+  margin-right:.4rem;
+  background: rgba(255,255,255,.22);
+  border: 1px solid rgba(255,255,255,.32);
+  color:#0b1e48;
+  mix-blend-mode: screen;           
+}
+
+@media (max-width: 900px){
+  .quote-context{ font-size: .84rem; }
+}

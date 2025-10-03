@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Teze & Vyvrácení – Horizont</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" />
+
+  <style>
+    .theses-stack{ display:flex; flex-direction:column; gap:1.2rem; }
+
+    
+    .quote-bubble{
+      position: relative;
+      background: linear-gradient(135deg, #0b4fb6, #1a80ff);
+      color: #fff;
+      padding: 1.2rem 1.3rem 1.1rem 1.3rem;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.25);
+      box-shadow: 0 18px 38px rgba(20,80,170,.28);
+      overflow: hidden;
+    }
+    .quote-bubble:before{
+      content: "“";
+      position: absolute;
+      font-size: 9rem;
+      line-height: .5;
+      color: rgba(255,255,255,.14);
+      left: .35rem; top: .2rem;
+      pointer-events: none;
+      font-weight: 700;
+    }
+    .quote-text{ position: relative; z-index: 1; font-size: clamp(1.05rem, 2.8vw, 1.25rem); line-height: 1.55; margin: 0; }
+    .quote-meta{
+      position: relative; z-index: 1;
+      display:flex; gap:.6rem; align-items:center; margin-top:.6rem; opacity:.95; font-weight:600;
+    }
+    .quote-author{ padding:.22rem .55rem; border-radius:999px; background: rgba(255,255,255,.18); border:1px solid rgba(255,255,255,.3); }
+    .quote-tag{ padding:.22rem .55rem; border-radius:999px; background: rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.25); }
+
+    /* Reakce – skosená karta s „páskou“ nahoře */
+    .rebuttal{
+      position: relative;
+      background: var(--glass-strong-bg);
+      border: 1px solid rgba(255,255,255,.65);
+      border-radius: 16px;
+      box-shadow: 0 16px 36px rgba(8,25,60,.18);
+      padding: clamp(2.4rem, 6vw, 3rem) 1.2rem 1.1rem;
+      overflow: hidden;
+    }
+    .rebuttal:before{
+      content:" Jak je to doopravdy?";
+      position:absolute; left:-12px; top:12px;
+      background: linear-gradient(90deg,#5aa2ff,#2fb0ff,#5aa2ff);
+      color:#0b2e6d; font-weight:800; letter-spacing:.3px;
+      padding:.28rem .8rem; border-radius:999px;
+      box-shadow:0 8px 18px rgba(47,176,255,.35);
+      transform: rotate(-3deg);
+      pointer-events: none;
+      top: 15px;
+      
+    }
+    .rebuttal p{ margin:.55rem 0 0; line-height:1.65; }
+
+    /* Jedna teze (citát + reakce) */
+    .thesis{ display:grid; grid-template-columns: 1fr; gap:.8rem; }
+    @media (min-width: 860px){
+      .thesis{ grid-template-columns: minmax(300px, 46%) 1fr; align-items: stretch; }
+    }
+  </style>
+</head>
+<body>
+<div id="top"></div>
+
+  <!-- HEADER (stejný jako na indexu) -->
+  <header class="header">
+    <div class="container header-inner">
+      <a class="logo" href="index.html#top" aria-label="Domů – Horizont">Horizont</a>
+
+      <button class="nav-toggle" aria-label="Toggle navigation" aria-controls="mainNav" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+
+      <nav>
+        <ul id="mainNav" class="nav-list">
+          <li><a href="index.html#about">O nás</a></li>
+          <li><a href="index.html#program">Program</a></li>
+          <li><a href="index.html#leader">Předseda</a></li>
+          <li><a href="index.html#work">Naše práce</a></li>
+          <li><a href="index.html#contact">Kontakt</a></li>
+          <li><a href="reports.html">Měsíční reporty</a></li>
+          <li><a class="active" href="teze.html">Jak je to doopravdy?</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- OBSAH -->
+  <main class="section fade-in">
+    <div class="container">
+      <h1 class="headline">Jak je to doopravdy?</h1>
+      <p style="text-align:center;max-width:780px;margin:.2rem auto 1.2rem;color:#4a5568">
+        Nebudeme nechávat prostor mlžení a polopravdám. Průběžně budeme informovat občany o stanoviscích ostatních kandidátů, stran i kongresmanů. Objektivnost a reálné důsledky jsou pro nás klíčové, proto každé tvrzení zasadíme do kontextu a vysvětlíme, jak se věci doopravdy mají.
+      </p>
+
+      <div class="theses-stack">
+        <section class="thesis fade-in">
+          <!-- CITÁT -->
+          <div class="quote-bubble">
+            <p class="quote-text">
+              „Můj návrh ohledně zvýšení daně na alkohol by se týkal pouze velkých firem, které se zabývají výrobou tvrdého alkoholu. Cílem je mírná regulace s výhledem zisku pro státní pokladnu. Výrobci alkoholu dosahují podobně vysokých zisků jako například půjčovny automobilů, u nichž byla regulace rovněž zavedena. Koncových zákazníků by se tato změna měla dotknout jen minimálně, protože korporace vyrábějí prémiový alkohol, který prodávají za desetitisíce korun za láhev.“
+            </p>
+            <div class="quote-meta">
+              <span class="quote-author">Autor výroku: @williamreed (iris.ic)</span>
+              <span class="quote-tag">Teze #01</span>
+            </div>
+              <div class="quote-context">
+    <span class="ctx-label">Kontext</span>
+    Výrok byl napsán do komentářů na sociální síti Iris. Týkal se volebního programu osoby William Reed, který
+chce zavést 30% daň z tvrdého alkoholu. Společně s tím chce veškeré zisky z této sektorové daně vložit do zdravotnictví, protialkoholní léčby a na pohřební fondy(neexistující). Taktéž chce posílit dohled nad distribucí alkoholu, aby zamezil obcházení daně.
+  </div>
+          </div>
+
+          <!-- REAKCE -->
+          <div class="rebuttal">
+            <p>
+              Zvýšení sektorové daně na tvrdý alkohol by v praxi nezasáhlo pouze „velké korporace“. Pokud zákon přesně nedefinuje, koho považuje za „velkého výrobce“ (podle obratu, objemu či aktiv), vzniká právní nejistota a prostor k obcházení. V odvětví s dlouhým výrobním cyklem a vysokými kapitálovými náklady se vyšší daň obvykle promítne do koncových cen napříč portfoliem, nejen do prémiových lahví. Výsledkem je zdražení i běžných produktů, tlak na menší provozy a potenciální přesun výroby či účetnictví jinam.
+            </p>
+<p>Přínos pro rozpočet je nejistý bez řádné analýzy RIA: je nutné porovnat marže s náklady kapitálu, modelovat dopad na ceny, zaměstnanost a investice a zohlednit administrativní zátěž a vymahatelnost. Bez těchto dat hrozí nízký fiskální výnos, zato vyšší náklady pro spotřebitele a deformace trhu. Srovnání s autopůjčovnami není vhodné – ty monetizují existující aktivum s jinou nákladovou strukturou, zatímco lihoviny nesou rizika surovin, energie, zrání a skladování.</p>
+          <p>Bez dat a přesných definic je to spíše daň z dojmů než promyšlená regulace. Autorův návrh připomíná spíše náhodně vymyšlený bod do volebního programu než odpovědnou fiskální politiku.</p>
+</div>
+        </section>
+        <!-- ======= /ŠABLONA TEZE ======= -->
+
+        <!-- DRUHÁ UKÁZKOVÁ TEZE -->
+        <section class="thesis fade-in">
+          <div class="quote-bubble">
+            <p class="quote-text">
+              „Normálna vec. Zlepšenie verejného zdravia : síce možno vyššia cena alhoholu vedie k nižšej spotrebe a teda menej zdravotných problémov, menej násilia, dopravnách nehôd alebo samovrážd spojených alkoholom. Vyšší príjem do štátneho rozpočtu : peniaze sa môžu využiť na zdravotníctvo, školstvo či sociálne služby. Napríklad na liečbu následkom nadmerného pitia sú často oveľa vyššie než z predaja alkoholu. Prevencia u mladistvých : menej pitia v mladom veku znižuje riziko závislosti. Zníženie spoločenských nákladov : alkohol prispieva k zvýšeniu kriminality, násilia a mnoho iného.Vyššia daň môže tieto negatívne dopady zmierniť.“
+            </p>
+
+            <div class="quote-meta">
+              <span class="quote-author">Autor výroku: @liag (Iris.ic)</span>
+              <span class="quote-tag">Teze #02</span>
+            </div>
+<div class="quote-context">
+    <span class="ctx-label">Kontext</span>
+    Výrok byl napsán do komentářů na sociální síti Iris. Odpovídal na komentář v diskuzi, který byl ohledně důvodu zdanění. Obecně se týkal volebního programu osoby William Reed, který
+chce zavést 30% daň z tvrdého alkoholu. Společně s tím chce veškeré zisky z této sektorové daně vložit do zdravotnictví, protialkoholní léčby a na pohřební fondy(neexistující). Taktéž chce posílit dohled nad distribucí alkoholu, aby zamezil obcházení daně.
+  </div>
+          </div>
+
+          <div class="rebuttal">
+            <p>
+              Automatické „zlepšení veřejného zdraví“ není jisté: pokud lidé přesedlají na levnější či nelegální alternativy, může spotřeba rizikových nápojů dokonce vzrůst a zdravotní dopady se nezlepší. Stejně nejisté je tvrzení o vyšších příjmech do rozpočtu – bez účelového rozpočtového určení a kontrolních mechanismů nelze slíbit, že peníze skutečně skončí ve zdravotnictví či školství. Prevence u mladistvých závisí více na dostupnosti programů, vymáhání věkových limitů a práci komunit než na samotné ceně. „Snížení společenských nákladů“ předpokládá, že se daň promítne do nižší spotřeby, nikoli do vyššího podílu šedé ekonomiky a nákladnějšího dohledu; to bez analýzy nelze tvrdit. V reálu se daň obvykle propsuje do cen napříč portfoliem a zasáhne i běžné spotřebitele — přičemž výrobní cyklus, zrání a certifikace zvyšují riziko trvalého zdražení.
+            </p>
+<p> Je sice chvályhodné, že se autorka snaží nastínit možné pozitivní dopady, v této podobě však návrh působí spíše jako přání než jako reálná, systémově odpovědná změna. Výrok se nevěnuje klíčovým důsledkům – dopadu na ceny, riziku šedé ekonomiky či vymahatelnosti – a postrádá datovou i rozpočtovou oporu. Argumentace budí dojem nedostatečné zkušenosti s praktickým návrhem legislativy.</p>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+<p>Provozovatel webové stránky horizont.ic je PO: Horizont – Liberální demokratická strana, IČ 889</p>
+    <p>&copy; 2025 Horizont – Liberální demokratická strana</p>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
