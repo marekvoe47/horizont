@@ -241,10 +241,10 @@ footer{ background: linear-gradient(90deg, var(--blue-900), var(--blue)); color:
     background: linear-gradient(90deg, var(--blue-900), var(--blue));
     flex-direction: column; gap: 0;
     max-height: 0; overflow: hidden;
-    transition: max-height .3s ease;
+    transition: max-height .35s ease;
     border-bottom-left-radius: 12px; border-bottom-right-radius: 12px;
   }
-  nav .nav-list.open { max-height: 300px; }
+  nav .nav-list.open { max-height: 100vh; }
   nav .nav-list a { display: block; padding: 14px 18px; }
 
   .gradient-hero{ min-height: 80vh; }
