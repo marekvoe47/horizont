@@ -143,9 +143,37 @@ section { scroll-margin-top: 72px; }
 .card p + p { margin-top: .9rem; }
 
 /* Program */
-.program-grid{ display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.2rem; }
-.program-item{ padding: 1.1rem 1.1rem 0.9rem; cursor: default; overflow: visible; }
-.program-content p{ margin: 0; line-height: 1.65; }
+/* širší kontejner jen pro program */
+#program .container { max-width: 1280px; }
+
+/* mřížka: mobil = 1 sloupec, od 700px = 2 široké sloupce */
+.program-grid{
+  display: grid;
+  gap: 1.2rem;
+  grid-template-columns: 1fr; /* mobil */
+}
+
+@media (min-width: 700px){
+  .program-grid{
+    grid-template-columns: repeat(2, minmax(380px, 1fr));
+    gap: 1.2rem;
+  }
+  /* roztáhni třetí dlaždici jen pokud je POSLEDNÍ = máme přesně 3 kusy */
+  .program-grid > .program-item:nth-child(3):last-child{
+    grid-column: 1 / -1;
+  }
+}
+
+@media (min-width: 1200px){
+  .program-grid{
+    grid-template-columns: repeat(2, minmax(460px, 1fr));
+    gap: 1.4rem;
+  }
+}
+
+.program-item{ padding: 1.2rem 1.3rem 1rem; }
+.program-content p{ line-height: 1.7; }
+
 .program-item:hover{ transform: none; box-shadow: 0 12px 24px rgba(10,86,194,.10); border-color: rgba(10,86,194,.15); }
 .program-foot{ margin-top: .85rem; padding-top: .65rem; border-top: 1px dashed rgba(10,86,194,.18);
   display: flex; justify-content: flex-end; align-items: center; }
