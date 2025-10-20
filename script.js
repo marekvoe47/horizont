@@ -1,73 +1,114 @@
-// Fade-in on scroll
-document.documentElement.classList.add('js');
-const fadeEls = document.querySelectorAll('.fade-in');
-const io = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('show');
-      io.unobserve(entry.target);
+// Enable JS styles
+const root = document.documentElement;
+root.classList.add('js');
+
+/* -------- Fade-in animation -------- */
+const fadeEls = Array.from(document.querySelectorAll('.fade-in'));
+const reduceMotionQuery = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
+
+function revealImmediately(){
+  fadeEls.forEach(el => el.classList.add('show'));
+}
+
+if (!('IntersectionObserver' in window) || (reduceMotionQuery && reduceMotionQuery.matches)) {
+  revealImmediately();
+} else {
+  const fadeObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('show');
+        fadeObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.2 });
+
+  fadeEls.forEach(el => fadeObserver.observe(el));
+
+  if (reduceMotionQuery) {
+    const onPreferenceChange = event => {
+      if (event.matches) {
+        revealImmediately();
+        fadeObserver.disconnect();
+      }
+    };
+
+    if (typeof reduceMotionQuery.addEventListener === 'function') {
+      reduceMotionQuery.addEventListener('change', onPreferenceChange);
+    } else if (typeof reduceMotionQuery.addListener === 'function') {
+      reduceMotionQuery.addListener(onPreferenceChange);
     }
-  });
-}, { threshold: 0.2 });
-fadeEls.forEach(el => io.observe(el));
-
-/** Toggle program items (no scroll jumps) */
-function toggleProgram(item, event) {
-  if (event) event.preventDefault();
-  item.classList.toggle('open');
-  if (event && (event.pointerType === 'mouse' || event.pointerType === 'touch' || event.type === 'click')) {
-    setTimeout(() => item.blur(), 10);
   }
 }
-function keyToggle(e, item) {
-  const k = e.key || e.code;
-  if (k === 'Enter' || k === ' ' || k === 'Spacebar') {
-    e.preventDefault();
-    toggleProgram(item, e);
-  }
-}
-window.toggleProgram = toggleProgram;
-window.keyToggle = keyToggle;
 
-// Prevent focus highlight in some live previews
-document.querySelectorAll('.program-item').forEach(el => {
-  el.addEventListener('mousedown', e => e.preventDefault());
+/* -------- Navigation state -------- */
+const navLinks = Array.from(document.querySelectorAll('#mainNav a'));
+
+const currentPath = window.location.pathname.split('/').pop() || 'index.html';
+navLinks.forEach(link => {
+  const href = link.getAttribute('href');
+  if (!href) return;
+
+  if (!link.hash) {
+    const normalized = href.split('#')[0];
+    if (normalized === currentPath || (normalized === 'index.html' && currentPath === '')) {
+      link.classList.add('active');
+      link.setAttribute('aria-current', 'page');
+    }
+    return;
+  }
 });
 
-// Active nav highlighting by section
-const navLinks = [...document.querySelectorAll('#mainNav a')];
-const sections = navLinks.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
-const navIO = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    const id = entry.target.getAttribute('id');
-    const link = navLinks.find(a => a.getAttribute('href') === `#${id}`);
-    if (!link) return;
-    if (entry.isIntersecting) {
-      navLinks.forEach(a => a.classList.remove('active'));
-      link.classList.add('active');
-    }
-  });
-}, { threshold: 0.6 });
-sections.forEach(sec => navIO.observe(sec));
+const sectionLinks = navLinks.filter(link => {
+  if (!link.hash) return false;
+  const id = link.hash.slice(1);
+  return !!document.getElementById(id);
+});
+
+if ('IntersectionObserver' in window && sectionLinks.length) {
+  const sections = sectionLinks.map(link => document.getElementById(link.hash.slice(1))).filter(Boolean);
+  const navObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      sectionLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('aria-current') === 'location') {
+          link.removeAttribute('aria-current');
+        }
+      });
+      const activeLink = sectionLinks.find(link => link.hash.slice(1) === entry.target.id);
+      if (activeLink) {
+        activeLink.classList.add('active');
+        activeLink.setAttribute('aria-current', 'location');
+      }
+    });
+  }, { threshold: 0.6 });
+
+  sections.forEach(section => navObserver.observe(section));
+}
 
 /* -------- Mobile nav toggle -------- */
 const toggleBtn = document.querySelector('.nav-toggle');
 const navList  = document.getElementById('mainNav');
 
-function closeNav(){
-  navList.classList.remove('open');
-  toggleBtn.classList.remove('open');
-  toggleBtn.setAttribute('aria-expanded', 'false');
+if (toggleBtn && navList) {
+  const closeNav = () => {
+    navList.classList.remove('open');
+    toggleBtn.classList.remove('open');
+    toggleBtn.setAttribute('aria-expanded', 'false');
+  };
+
+  toggleBtn.addEventListener('click', () => {
+    const willOpen = !navList.classList.contains('open');
+    navList.classList.toggle('open', willOpen);
+    toggleBtn.classList.toggle('open', willOpen);
+    toggleBtn.setAttribute('aria-expanded', String(willOpen));
+  });
+
+  navLinks.forEach(link => link.addEventListener('click', closeNav));
+
+  window.addEventListener('scroll', () => {
+    if (navList.classList.contains('open')) {
+      closeNav();
+    }
+  }, { passive: true });
 }
-
-toggleBtn.addEventListener('click', () => {
-  const willOpen = !navList.classList.contains('open');
-  navList.classList.toggle('open', willOpen);
-  toggleBtn.classList.toggle('open', willOpen);
-  toggleBtn.setAttribute('aria-expanded', String(willOpen));
-});
-
-// Close menu on link click (better UX)
-navLinks.forEach(a => a.addEventListener('click', closeNav));
-// Close on scroll
-window.addEventListener('scroll', closeNav, { passive: true });
