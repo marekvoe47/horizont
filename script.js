@@ -6,36 +6,38 @@ root.classList.add('js');
 const fadeEls = Array.from(document.querySelectorAll('.fade-in'));
 const reduceMotionQuery = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
 
-function revealImmediately(){
-  fadeEls.forEach(el => el.classList.add('show'));
-}
+if (fadeEls.length) {
+  const revealImmediately = () => {
+    fadeEls.forEach(el => el.classList.add('show'));
+  };
 
-if (!('IntersectionObserver' in window) || (reduceMotionQuery && reduceMotionQuery.matches)) {
-  revealImmediately();
-} else {
-  const fadeObserver = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('show');
-        fadeObserver.unobserve(entry.target);
+  if (!('IntersectionObserver' in window) || (reduceMotionQuery && reduceMotionQuery.matches)) {
+    revealImmediately();
+  } else {
+    const fadeObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('show');
+          fadeObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.2 });
+
+    fadeEls.forEach(el => fadeObserver.observe(el));
+
+    if (reduceMotionQuery) {
+      const onPreferenceChange = event => {
+        if (event.matches) {
+          revealImmediately();
+          fadeObserver.disconnect();
+        }
+      };
+
+      if (typeof reduceMotionQuery.addEventListener === 'function') {
+        reduceMotionQuery.addEventListener('change', onPreferenceChange);
+      } else if (typeof reduceMotionQuery.addListener === 'function') {
+        reduceMotionQuery.addListener(onPreferenceChange);
       }
-    });
-  }, { threshold: 0.2 });
-
-  fadeEls.forEach(el => fadeObserver.observe(el));
-
-  if (reduceMotionQuery) {
-    const onPreferenceChange = event => {
-      if (event.matches) {
-        revealImmediately();
-        fadeObserver.disconnect();
-      }
-    };
-
-    if (typeof reduceMotionQuery.addEventListener === 'function') {
-      reduceMotionQuery.addEventListener('change', onPreferenceChange);
-    } else if (typeof reduceMotionQuery.addListener === 'function') {
-      reduceMotionQuery.addListener(onPreferenceChange);
     }
   }
 }
@@ -92,23 +94,30 @@ const navList  = document.getElementById('mainNav');
 
 if (toggleBtn && navList) {
   const closeNav = () => {
+    toggleBtn.setAttribute('aria-expanded', 'false');
+    if (!navList.classList.contains('open')) return;
     navList.classList.remove('open');
     toggleBtn.classList.remove('open');
-    toggleBtn.setAttribute('aria-expanded', 'false');
+    window.removeEventListener('scroll', handleScrollClose);
+  };
+
+  const handleScrollClose = () => closeNav();
+
+  const openNav = () => {
+    if (navList.classList.contains('open')) return;
+    navList.classList.add('open');
+    toggleBtn.classList.add('open');
+    toggleBtn.setAttribute('aria-expanded', 'true');
+    window.addEventListener('scroll', handleScrollClose, { passive: true });
   };
 
   toggleBtn.addEventListener('click', () => {
-    const willOpen = !navList.classList.contains('open');
-    navList.classList.toggle('open', willOpen);
-    toggleBtn.classList.toggle('open', willOpen);
-    toggleBtn.setAttribute('aria-expanded', String(willOpen));
+    if (navList.classList.contains('open')) {
+      closeNav();
+    } else {
+      openNav();
+    }
   });
 
   navLinks.forEach(link => link.addEventListener('click', closeNav));
-
-  window.addEventListener('scroll', () => {
-    if (navList.classList.contains('open')) {
-      closeNav();
-    }
-  }, { passive: true });
 }

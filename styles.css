@@ -354,3 +354,14 @@ section { scroll-margin-top: 72px; }
 }
 
 @keyframes heroSpin { to { transform: translate(-50%, -50%) rotate(360deg); } }
+
+@supports (content-visibility: auto){
+  .section {
+    content-visibility: auto;
+    contain-intrinsic-size: 560px;
+  }
+
+  .section.section-compact {
+    contain-intrinsic-size: 380px;
+  }
+}
